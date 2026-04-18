@@ -1,0 +1,9 @@
+.chats-container {
+    width: 30%;
+}
+
+.chat-links {
+    display: flex;
+    flex-direction: column;
+}
+
