@@ -2,7 +2,7 @@ const users = [
   {
     id: 1,
     userName: 'John Doe',
-    lastSession: new Date(),
+    lastSession: new Date().toISOString(),
     photo: '',
     conversation: [
       {
@@ -22,7 +22,7 @@ const users = [
   {
     id: 2,
     userName: 'Luis',
-    lastSession: new Date(),
+    lastSession: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
     photo: '',
     conversation: [
       {
@@ -42,7 +42,7 @@ const users = [
   {
     id: 3,
     userName: 'Carlos',
-    lastSession: new Date(),
+    lastSession: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
     photo: '',
     conversation: [
       {

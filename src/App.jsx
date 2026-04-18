@@ -52,6 +52,7 @@ function App() {
         sender: selectedUser.userName
       }
 
+      // Actualizo el usuario con la respuesta del bot
       const updatedUserWithBotResponse = {
         ...updatedUser,
         conversation: [...updatedUser.conversation, botMessage]
@@ -62,16 +63,29 @@ function App() {
           currentUser.userName === updatedUserWithBotResponse.userName ? updatedUserWithBotResponse : currentUser
         )
       )
+
       setSelectedUser(updatedUserWithBotResponse)
       setConversation(updatedUserWithBotResponse.conversation)
+
+      // Actualizo el lastSession del usuario
+      const updatedTimeUser = { ...updatedUserWithBotResponse, lastSession: new Date().toISOString() }
+
+      setUsersList(prev =>
+        prev.map(u => (u.id === updatedTimeUser.id ? updatedTimeUser : u))
+      )
+
+      setSelectedUser(updatedTimeUser)
+      setConversation(updatedTimeUser.conversation)
     }, 1000)
+
+    
   }
 
   const handleAddChat = (user) => {
     const newUser = {
       id: usersList.length + 1,
       userName: user,
-      lastSession: new Date(),
+      lastSession: new Date().toISOString(),
       photo: '',
       conversation: []
     }

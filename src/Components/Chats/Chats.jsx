@@ -1,10 +1,27 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import './Chats.css'
 
 const Chats = ({ loggedUser, users, handleUserClick, handleAddChat }) => {
   const [showModal, setShowModal] = useState(false)
   const [newUser, setNewUser] = useState('')
+  const [now, setNow] = useState(Date.now())
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 15000) // refresca cada 15s
+    return () => clearInterval(id)
+  }, [])
+
+  const getStatusText = (lastSession) => {
+    if (!lastSession) return 'Online'
+
+    const lastSessionMs = new Date(lastSession).getTime()
+    const diffMs = now - lastSessionMs
+    const diffMinutes = Math.floor(diffMs / 60000)
+
+    if (diffMinutes < 1) return 'Online'
+    return `Ultima vez hace ${diffMinutes} minuto${diffMinutes > 1 ? 's' : ''}`
+  }
 
   const onAdd = () => {
     handleAddChat(newUser)
@@ -24,6 +41,7 @@ const Chats = ({ loggedUser, users, handleUserClick, handleAddChat }) => {
             <Link to={`/${user.id}`} key={user.userName} onClick={() => handleUserClick(user)}>
               <img src={user.photo} alt={user.userName} />
               <span>{user.userName}</span>
+              <span>{getStatusText(user.lastSession)}</span>
             </Link>
           )
         })}
