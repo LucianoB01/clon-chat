@@ -1,21 +1,24 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
+import { FaPlus } from "react-icons/fa6";
 import { Link } from 'react-router-dom'
 import './Chats.css'
 
-const Chats = ({ loggedUser, users, handleUserClick, handleAddChat }) => {
+const Chats = ({ loggedUser, users, selectedUser, handleUserClick, handleAddChat }) => {
   const [showModal, setShowModal] = useState(false)
   const [newUser, setNewUser] = useState('')
   const [now, setNow] = useState(Date.now())
 
   useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 15000) // refresca cada 15s
+    const id = setInterval(() => setNow(Date.now()), 15000)
     return () => clearInterval(id)
   }, [])
 
   const getStatusText = (lastSession) => {
     if (!lastSession) return 'Online'
 
-    const lastSessionMs = new Date(lastSession).getTime()
+    const lastSessionMs = Date.parse(lastSession)
+    if (Number.isNaN(lastSessionMs)) return 'Online'
+
     const diffMs = now - lastSessionMs
     const diffMinutes = Math.floor(diffMs / 60000)
 
@@ -28,30 +31,52 @@ const Chats = ({ loggedUser, users, handleUserClick, handleAddChat }) => {
     setShowModal(false)
     setNewUser('')
   }
+
   return (
     <div className='chats-container'>
-      <div>
-        <span>Usuario logueado:</span>
+      <div className='logged-user'>
+        <span className='logged-user-label'>Usuario logueado</span>
         <img src={loggedUser.photo} alt={loggedUser.userName} />
-        <span>{loggedUser.userName}</span>
+        <span className='logged-user-name'>{loggedUser.userName}</span>
       </div>
+
       <div className='chat-links'>
         {users.map((user) => {
+          const isActive = selectedUser ? selectedUser.id === user.id : false
+
           return (
-            <Link to={`/${user.id}`} key={user.userName} onClick={() => handleUserClick(user)}>
+            <Link
+              className={`chat-link ${isActive ? 'active' : ''}`}
+              to={`/${user.id}`}
+              key={user.userName}
+              onClick={() => handleUserClick(user)}
+            >
               <img src={user.photo} alt={user.userName} />
-              <span>{user.userName}</span>
-              <span>{getStatusText(user.lastSession)}</span>
+              <div className='chat-link-body'>
+                <span className='chat-link-name'>{user.userName}</span>
+                <span className='chat-link-status'>{getStatusText(user.lastSession)}</span>
+              </div>
             </Link>
           )
         })}
       </div>
-      <button onClick={() => setShowModal(!showModal)}>Agregar chat</button>
+
+      <button className='add-chat-button' onClick={() => setShowModal(!showModal)}><FaPlus size={28} /></button>
+
       {showModal && (
-        <div className='modal'>
-          <div className='modal-content'>
+        <div className='modal' onClick={() => setShowModal(false)}>
+          <div className='modal-content' onClick={(event) => event.stopPropagation()}>
             <span>Nombre del nuevo chat:</span>
-            <input type='text' value={newUser} onChange={(event) => setNewUser(event.target.value)} />
+            <input
+              type='text'
+              value={newUser}
+              onChange={(event) => setNewUser(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  onAdd()
+                }
+              }}
+            />
             <button onClick={onAdd}>Agregar</button>
           </div>
         </div>

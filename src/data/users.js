@@ -1,21 +1,21 @@
 const users = [
   {
     id: 1,
-    userName: 'John Doe',
+    userName: 'Pepe',
     lastSession: new Date().toISOString(),
-    photo: '',
+    photo: 'https://as1.ftcdn.net/jpg/04/56/58/14/1000_F_456581427_5XpGqNqCwLAGwaFFvxVGvnW2teOfJ0ZL.jpg',
     conversation: [
       {
         message: 'Anotaciones',
-        sender: 'John Doe'
+        sender: 'Pepe'
       },
       {
         message: 'Lista super',
-        sender: 'John Doe'
+        sender: 'Pepe'
       },
       {
         message: '  - Comprar pan',
-        sender: 'John Doe'
+        sender: 'Pepe'
       }
     ]
   },
@@ -23,11 +23,11 @@ const users = [
     id: 2,
     userName: 'Luis',
     lastSession: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
-    photo: '',
+    photo: 'https://as1.ftcdn.net/jpg/04/56/58/14/1000_F_456581427_5XpGqNqCwLAGwaFFvxVGvnW2teOfJ0ZL.jpg',
     conversation: [
       {
         message: 'Hola',
-        sender: 'John Doe'
+        sender: 'Pepe'
       },
       {
         message: 'Como estas?',
@@ -35,7 +35,7 @@ const users = [
       },
       {
         message: 'Bien y vos?',
-        sender: 'John Doe'
+        sender: 'Pepe'
       }
     ]
   },
@@ -43,7 +43,7 @@ const users = [
     id: 3,
     userName: 'Carlos',
     lastSession: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-    photo: '',
+    photo: 'https://as1.ftcdn.net/jpg/04/56/58/14/1000_F_456581427_5XpGqNqCwLAGwaFFvxVGvnW2teOfJ0ZL.jpg',
     conversation: [
       {
         message: 'Te paso el presupuesto que me pediste',
@@ -51,7 +51,7 @@ const users = [
       },
       {
         message: 'Dale',
-        sender: 'John Doe'
+        sender: 'Pepe'
       },
       {
         message: 'Perfecto',

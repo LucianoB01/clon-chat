@@ -13,84 +13,89 @@ function App() {
   const [conversation, setConversation] = useState(users[0].conversation)
 
   const handleUserClick = (user) => {
-    setSelectedUser(user)
-    setConversation(user.conversation)
-  }
-
-  const handleSendMessage = (messageText) => {
-    const trimmedMessage = messageText.trim()
-    if (!trimmedMessage) {
-      return
+    const updatedUser = {
+      ...user
     }
 
-    const user = usersList.find((user) => user.userName === selectedUser.userName)
+    setUsersList((prevUsers) =>
+      prevUsers.map((currentUser) =>
+        currentUser.id === updatedUser.id ? updatedUser : currentUser
+      )
+    )
+
+    setSelectedUser(updatedUser)
+    setConversation(updatedUser.conversation)
+  }
+
+  // Manejador para enviar mensaje
+  const handleSendMessage = (messageText) => {
+    const recipientId = selectedUser.id
+    const recipientName = selectedUser.userName
+
+    const user = usersList.find((user) => user.id === selectedUser.id)
     if (!user) {
       return
     }
 
     const newMessage = {
-      message: trimmedMessage,
+      message: messageText,
       sender: loggedUser.userName
     }
 
+    // Modifico la conversacion del usuario seleccionado
     const updatedUser = {
       ...user,
       conversation: [...user.conversation, newMessage]
     }
 
-    setUsersList(
-      usersList.map((currentUser) =>
-        currentUser.userName === updatedUser.userName ? updatedUser : currentUser
+    setUsersList((prevUsers) =>
+      prevUsers.map((currentUser) =>
+        currentUser.id === updatedUser.id ? updatedUser : currentUser
       )
     )
     setSelectedUser(updatedUser)
     setConversation(updatedUser.conversation)
 
+    // Creo timer para respuesta de "mensaje enviado"
     setTimeout(() => {
       const botMessage = {
         message: 'Mensaje recibido',
-        sender: selectedUser.userName
+        sender: recipientName
       }
 
-      // Actualizo el usuario con la respuesta del bot
-      const updatedUserWithBotResponse = {
-        ...updatedUser,
-        conversation: [...updatedUser.conversation, botMessage]
-      }
+      setUsersList((prevUsers) => {
+        const updatedUserWithBotResponse = {
+          ...updatedUser,
+          conversation: [...updatedUser.conversation, botMessage],
+          lastSession: new Date().toISOString()
+        }
 
-      setUsersList(
-        usersList.map((currentUser) =>
-          currentUser.userName === updatedUserWithBotResponse.userName ? updatedUserWithBotResponse : currentUser
+        setSelectedUser(updatedUserWithBotResponse)
+        setConversation(updatedUserWithBotResponse.conversation)
+
+        return prevUsers.map((currentUser) =>
+          currentUser.id === updatedUserWithBotResponse.id ? updatedUserWithBotResponse : currentUser
         )
-      )
-
-      setSelectedUser(updatedUserWithBotResponse)
-      setConversation(updatedUserWithBotResponse.conversation)
-
-      // Actualizo el lastSession del usuario
-      const updatedTimeUser = { ...updatedUserWithBotResponse, lastSession: new Date().toISOString() }
-
-      setUsersList(prev =>
-        prev.map(u => (u.id === updatedTimeUser.id ? updatedTimeUser : u))
-      )
-
-      setSelectedUser(updatedTimeUser)
-      setConversation(updatedTimeUser.conversation)
+      })
     }, 1000)
-
-    
   }
 
-  const handleAddChat = (user) => {
+  const handleAddChat = (userName) => {
+    const trimmedName = userName.trim()
+    if (!trimmedName) {
+      return
+    }
+
     const newUser = {
       id: usersList.length + 1,
-      userName: user,
+      userName: trimmedName,
       lastSession: new Date().toISOString(),
-      photo: '',
+      photo: 'https://as1.ftcdn.net/jpg/04/56/58/14/1000_F_456581427_5XpGqNqCwLAGwaFFvxVGvnW2teOfJ0ZL.jpg',
       conversation: []
     }
 
-    setUsersList([...usersList, newUser])
+    // Agrego nuevo usuario a la lista de usuarios 
+    setUsersList((prevUsers) => [...prevUsers, newUser])
   }
 
   return (

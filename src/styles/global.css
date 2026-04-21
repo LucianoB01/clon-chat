@@ -1,0 +1,53 @@
+:root {
+  --bg-app: #eef2f7;
+  --bg-panel: #ffffff;
+  --bg-muted: #f5f7fb;
+  --bg-sent: #1f7ae0;
+  --bg-received: #ffffff;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-on-brand: #ffffff;
+  --border-soft: #e5e7eb;
+  --accent: #2563eb;
+  --accent-soft: #dbeafe;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 4px 14px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at 100% 0%, #e3edff 0%, transparent 28%),
+    radial-gradient(circle at 0% 100%, #dfeafe 0%, transparent 32%),
+    var(--bg-app);
+}
+
+img {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid var(--border-soft);
+  background: #f3f4f6;
+}
+
+button,
+input {
+  font: inherit;
+}
