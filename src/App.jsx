@@ -11,6 +11,11 @@ function App() {
   const [usersList, setUsersList] = useState(users)
   const [selectedUser, setSelectedUser] = useState(users[0])
   const [conversation, setConversation] = useState(users[0].conversation)
+  const [searchValue, setSearchValue] = useState('')
+
+  const filteredUsers = searchValue.trim()
+    ? usersList.filter((user) => user.userName.toLowerCase().includes(searchValue.toLowerCase()))
+    : usersList
 
   const handleUserClick = (user) => {
     const updatedUser = {
@@ -98,6 +103,10 @@ function App() {
     setUsersList((prevUsers) => [...prevUsers, newUser])
   }
 
+  const onSearch = (query) => {
+    setSearchValue(query)
+  }
+
   return (
     <>
       <Routes>
@@ -105,23 +114,27 @@ function App() {
               path='/'
               element={<HomeScreen 
                           loggedUser={loggedUser} 
-                          usersList={usersList} 
+                          usersList={filteredUsers}
                           selectedUser={selectedUser} 
                           handleUserClick={handleUserClick} 
                           handleAddChat={handleAddChat}
+                          onSearch={onSearch}
+                          searchValue={searchValue}
                         />}
           />
           <Route
               path='/:id'
               element={<ChatScreen 
                           loggedUser={loggedUser} 
-                          usersList={usersList} 
+                          usersList={filteredUsers}
                           selectedUser={selectedUser} 
                           handleUserClick={handleUserClick} 
                           conversation={conversation} 
                           setConversation={setConversation} 
                           handleSendMessage={handleSendMessage} 
                           handleAddChat={handleAddChat}
+                          onSearch={onSearch}
+                          searchValue={searchValue}
                         />}
           />
           <Route 

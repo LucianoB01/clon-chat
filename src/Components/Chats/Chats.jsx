@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa6";
 import { Link } from 'react-router-dom'
 import './Chats.css'
 
-const Chats = ({ loggedUser, users, selectedUser, handleUserClick, handleAddChat }) => {
+const Chats = ({ loggedUser, users, selectedUser, handleUserClick, handleAddChat, onSearch, searchValue }) => {
   const [showModal, setShowModal] = useState(false)
   const [newUser, setNewUser] = useState('')
   const [now, setNow] = useState(Date.now())
@@ -38,6 +38,10 @@ const Chats = ({ loggedUser, users, selectedUser, handleUserClick, handleAddChat
         <span className='logged-user-label'>Usuario logueado</span>
         <img src={loggedUser.photo} alt={loggedUser.userName} />
         <span className='logged-user-name'>{loggedUser.userName}</span>
+      </div>
+
+      <div className='search-bar'>
+        <input className='search-input' type="text" placeholder="Buscar usuarios..." value={searchValue} onChange={(event) => onSearch(event.target.value)} />
       </div>
 
       <div className='chat-links'>

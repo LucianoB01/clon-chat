@@ -3,7 +3,7 @@ import ChatBox from '../../Components/ChatBox/ChatBox'
 import { useNavigate } from 'react-router-dom'
 import './ChatScreen.css'
 
-const ChatScreen = ({ loggedUser, usersList, selectedUser, handleUserClick, conversation, handleSendMessage, handleAddChat }) => {
+const ChatScreen = ({ loggedUser, usersList, selectedUser, handleUserClick, conversation, handleSendMessage, handleAddChat, onSearch, searchValue }) => {
   const navigate = useNavigate()
 
   return (
@@ -14,6 +14,8 @@ const ChatScreen = ({ loggedUser, usersList, selectedUser, handleUserClick, conv
         selectedUser={selectedUser}
         handleUserClick={handleUserClick}
         handleAddChat={handleAddChat}
+        onSearch={onSearch}
+        searchValue={searchValue}
       />
       <ChatBox
         loggedUser={loggedUser}
