@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback } from 'react'
+import { createContext, useState } from 'react'
 import users from '../data/users'
 
 export const UsersContext = createContext()
@@ -15,7 +15,7 @@ export const UsersProvider = ({ children }) => {
     ? usersList.filter((user) => user.userName.toLowerCase().includes(searchValue.toLowerCase()))
     : usersList
 
-  const handleUserClick = useCallback((user) => {
+  const handleUserClick = (user) => {
     const updatedUser = {
       ...user
     }
@@ -28,9 +28,9 @@ export const UsersProvider = ({ children }) => {
 
     setSelectedUser(updatedUser)
     setConversation(updatedUser.conversation)
-  }, [])
+  }
 
-  const handleSendMessage = useCallback((messageText) => {
+  const handleSendMessage = (messageText) => {
     const recipientId = selectedUser.id
     const recipientName = selectedUser.userName
 
@@ -80,9 +80,9 @@ export const UsersProvider = ({ children }) => {
         )
       })
     }, 1000)
-  }, [selectedUser, usersList, loggedUser])
+  }
 
-  const handleAddChat = useCallback((userName) => {
+  const handleAddChat = (userName) => {
     const trimmedName = userName.trim()
     if (!trimmedName) {
       return
@@ -98,11 +98,11 @@ export const UsersProvider = ({ children }) => {
 
     // Agrego nuevo usuario a la lista de usuarios 
     setUsersList((prevUsers) => [...prevUsers, newUser])
-  }, [usersList.length])
+  }
 
-  const onSearch = useCallback((query) => {
+  const onSearch = (query) => {
     setSearchValue(query)
-  }, [])
+  }
 
   const value = {
     usersList,
