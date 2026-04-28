@@ -44,6 +44,8 @@ clon-chat/
 │   │   └── Chats/             # Sidebar con lista y búsqueda
 │   │       ├── Chats.jsx
 │   │       └── Chats.css
+│   ├── Context/
+│    │  ├── UsersContext.jsx
 │   ├── Screens/
 │   │   ├── HomeScreen/        # Pantalla inicial (lista)
 │   │   │   ├── HomeScreen.jsx
