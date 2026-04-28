@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { FaPlus } from "react-icons/fa6";
 import { Link } from 'react-router-dom'
+import { UsersContext } from '../../Context/UsersContext'
 import './Chats.css'
 
-const Chats = ({ loggedUser, users, selectedUser, handleUserClick, handleAddChat, onSearch, searchValue }) => {
+const Chats = () => {
+  const { loggedUser, filteredUsers, selectedUser, handleUserClick, handleAddChat, onSearch, searchValue } = useContext(UsersContext)
   const [showModal, setShowModal] = useState(false)
   const [newUser, setNewUser] = useState('')
   const [now, setNow] = useState(Date.now())
@@ -45,7 +47,7 @@ const Chats = ({ loggedUser, users, selectedUser, handleUserClick, handleAddChat
       </div>
 
       <div className='chat-links'>
-        {users.map((user) => {
+        {filteredUsers.map((user) => {
           const isActive = selectedUser ? selectedUser.id === user.id : false
 
           return (

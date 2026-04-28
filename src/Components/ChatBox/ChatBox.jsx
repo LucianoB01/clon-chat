@@ -1,9 +1,10 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { UsersContext } from '../../Context/UsersContext'
 import './ChatBox.css'
 
-const ChatBox = ({ loggedUser, selectedUser, conversation, handleSendMessage, onBackToChats }) => {
+const ChatBox = ({ onBackToChats }) => {
+  const { loggedUser, selectedUser, conversation, handleSendMessage } = useContext(UsersContext)
   const [messageText, setMessageText] = useState('')
 
   const onSend = () => {

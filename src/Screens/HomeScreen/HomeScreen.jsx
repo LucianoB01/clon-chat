@@ -1,18 +1,12 @@
+import { useContext } from 'react'
+import { UsersContext } from '../../Context/UsersContext'
 import Chats from '../../Components/Chats/Chats'
 import './HomeScreen.css'
 
-const HomeScreen = ({ loggedUser, usersList, selectedUser, handleUserClick, handleAddChat, onSearch, searchValue }) => {
+const HomeScreen = () => {
   return (
     <div className='home-container'>
-      <Chats
-        loggedUser={loggedUser}
-        users={usersList}
-        selectedUser={selectedUser}
-        handleUserClick={handleUserClick}
-        handleAddChat={handleAddChat}
-        onSearch={onSearch}
-        searchValue={searchValue}
-      />
+      <Chats />
       <div className='home-empty-state'>
         <p>Selecciona un chat para empezar a conversar</p>
       </div>
